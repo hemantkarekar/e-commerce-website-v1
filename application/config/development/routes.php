@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-
 /*
 | -------------------------------------------------------------------------
 | URI ROUTING
@@ -63,13 +62,16 @@ $route['api-cart-process'] = 'Cart/process';
 $route['api/payment'] = 'Payment/index';
 
 // GET Routes
-$route['about-us'] = 'Pages/about';
+$route['about-us'] = 'Pages/index';
+$route['contact-us'] = 'Pages/index';
+$route['services'] = 'Pages/index';
+
 $route['login'] = 'Pages/login';
 $route['register'] = 'Pages/register';
 
 
-// /ecm-admin/ routes
-$route[''] = 'Dashboard/index';
+$route['(:any)/account'] = 'UserDashboard/index';
+
 $route['logout'] = 'auth/logout';
 $route['products/(:num)'] = 'Products/index/$1';
 $route['products/new'] = 'Products/new';

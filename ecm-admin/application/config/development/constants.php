@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 defined('APP_NAME') OR define('APP_NAME', "Commercio");
 defined('BASE_LOCALE')  OR define('BASE_LOCALE', 'INR');
+defined('ROOT_URL')  OR define('ROOT_URL', 'http://localhost:8080/e-commerce-website-v1');
 /*
 |--------------------------------------------------------------------------
 | Display Debug backtrace

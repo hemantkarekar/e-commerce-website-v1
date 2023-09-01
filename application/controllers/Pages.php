@@ -19,27 +19,39 @@ class Pages extends CI_Controller
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/userguide3/general/urls.html
 	 */
+
+	public $user = [];
+	public $data = [];
+
+	public function __construct()
+	{
+		parent::__construct();
+		if ($this->session->has_userdata('user')) {
+			$this->user = $this->session->userdata('user');
+			$this->data['user'] = $this->user;
+		}
+	}
 	public function index()
 	{
-		$data['page'] = [
+		$this->data['page'] = [
 			"title" => "Home"
 		];
-		$this->load->view('pages/index', $data);
+		$this->load->view('pages/index', $this->data);
 	}
 
 	public function login()
 	{
-		$data['page'] = [
+		$this->data['page'] = [
 			"title" => "Login"
 		];
-		$this->load->view('pages/login', $data);
+		$this->load->view('pages/login', $this->data);
 	}
 	public function register()
 	{
-		$data['page'] = [
+		$this->data['page'] = [
 			"title" => "Register"
 		];
-		$this->load->view('pages/register', $data);
+		$this->load->view('pages/register', $this->data);
 	}
 
 
@@ -76,12 +88,12 @@ class Pages extends CI_Controller
 					$error = array('error' => $this->upload->display_errors());
 					print_r($error);
 				} else {
-					$data = $this->upload->data();
-					print_r($data);
+					$this->data = $this->upload->data();
+					print_r($this->data);
 					$height = $this->input->post('height');
 					switch ($height) {
 						case '50':
-							$this->resize($data, $height, true, true);
+							$this->resize($this->data, $height, true, true);
 							break;
 						case '16':
 						case '32':
@@ -92,7 +104,7 @@ class Pages extends CI_Controller
 						case '600':
 						case '1024':
 						case '2048':
-							$this->resize($data, $height, true, false);
+							$this->resize($this->data, $height, true, false);
 							break;
 						default:
 							break;

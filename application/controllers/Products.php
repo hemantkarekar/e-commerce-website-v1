@@ -3,10 +3,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Products extends CI_Controller {
 
+	public $user = [];
+	public $data = [];
+
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->model('ProductModel');
+		
+	
+		if ($this->session->has_userdata('user')) {
+			$this->user = $this->session->userdata('user');
+			$this->data['user'] = $this->user;
+		}
 	}
 	
 	 public function index($page = null)
@@ -34,46 +43,46 @@ class Products extends CI_Controller {
 		 // echo count($products_all);
  
  
-		 $data['page'] = [
+		 $this->data['page'] = [
 			 "title" => "Products",
 		 ];
-		 $data['products']['data'] = $products_current;
-		 $data['products']['pagination'] = $this->pagination->create_links();
+		 $this->data['products']['data'] = $products_current;
+		 $this->data['products']['pagination'] = $this->pagination->create_links();
  
-		 $this->load->view('pages/products/home', $data);
+		 $this->load->view('pages/products/home', $this->data);
 	 }
 	public function details($slug, $id)
 	{
 		$product_single = json_decode($this->ProductModel->get_where(['product_id' => $id]), true, 4);
-		$data['page'] = [
+		$this->data['page'] = [
 			"title" => $product_single['name'],
 		];
-		$data['product'] = $product_single;
-		$this->load->view('pages/products/detail', $data);
+		$this->data['product'] = $product_single;
+		$this->load->view('pages/products/detail', $this->data);
 	}
 	public function new()
 	{
-		$data['page'] = [
+		$this->data['page'] = [
 			'title'=> "Add New Product"
 		];
-		$data['breadcrumb'] = [
+		$this->data['breadcrumb'] = [
 			"Home" => "",
 			"Products" => "products",
 			"Create Product" => "Current",
 		];
-		$this->load->view('dashboard/products/product_new', $data);
+		$this->load->view('dashboard/products/product_new', $this->data);
 	}
 	public function edit($productId)
 	{
-		$data['page'] = [
+		$this->data['page'] = [
 			'title'=> "Edit Product"
 		];
-		$data['breadcrumb'] = [
+		$this->data['breadcrumb'] = [
 			"Home" => "",
 			"Products" => "products",
 			"Edit Product" => "Current",
 		];
-		$data['product'] = $productId;
-		$this->load->view('dashboard/products/product_edit', $data);
+		$this->data['product'] = $productId;
+		$this->load->view('dashboard/products/product_edit', $this->data);
 	}
 }

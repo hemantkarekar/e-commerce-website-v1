@@ -8,6 +8,9 @@ class CartHandler extends CI_Controller
 	public $output;
 	public $registered = true;
 
+	public $user = [];
+	public $data = [];
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -16,6 +19,11 @@ class CartHandler extends CI_Controller
 		$this->load->library('cart');
 
 		$this->load->helper('string');
+
+		if ($this->session->has_userdata('user')) {
+			$this->user = $this->session->userdata('user');
+			$this->data['user'] = $this->user;
+		}
 	}
 
 	public function index()
@@ -49,44 +57,63 @@ class CartHandler extends CI_Controller
 				]
 			]);
 		}
-		$data['cart_contents'] = $cart;
-		$data['page'] = [
+		$this->data['cart_contents'] = $cart;
+		$this->data['page'] = [
 			"title" => "Cart Page"
 		];
 		// print_r($this->CartModel->count_all());
 		// print_r();
 
-		$this->load->view('pages/cart/home', $data);
+		$this->load->view('pages/cart/home', $this->data);
 	}
 
+	/**
+	 * Checkout Page View
+	*/
 	public function confirm()
 	{
+		$this->load->view('welcome_message');
 	}
 
 	/* POST Requests */
+
+		
+	/**
+	 * empty
+	 * 
+	 * Empty the Cart Data
+	 *
+	 * @return void
+	 */
 	public function empty()
 	{
 		$this->cart->destroy();
 		// $this->load->view('welcome_message');
 	}
+	
+	/**
+	 * add
+	 *
+	 * Adds Data to the Cart Library Object
+	 * 
+	 * @return void
+	 */
 	public function add()
 	{
 		$response = null;
 
 		// Clean AJAX Data
-		$stream_clean = $this->security->xss_clean($this->input->raw_input_stream);
+		$stream_clean = xss_clean($this->input->raw_input_stream);
 		$request = json_decode($stream_clean);
 		$id = $request->id;
 
 		// Get Existing Cart Library Session Instance
 		$old_cart_lib = $this->cart->contents();
 
-		$data =  array(
+		$this->data =  array(
 			'product_id' => $id,
 		);
 
-		// Get Existing Cart Model Instance
-		$old_cart = $this->CartModel->get_where($data, false);
 
 		// Get Existing Product Model Instance to be added to Cart
 		$product_details = json_decode($this->ProductModel->get_where(['id' => $id]), true, 4);
@@ -105,10 +132,6 @@ class CartHandler extends CI_Controller
 			'qty' => 1,
 			'price' => $product_details['discount_price'],
 			'name'   => str_split($product_details['name'], 15)[0],
-			// 'id'      => 'sku_123ABC',
-			// 'qty'     => 1,
-			// 'price'   => 39.95,
-			// 'name'    => 'T-Shirt',
 		];
 
 		/**
@@ -137,23 +160,6 @@ class CartHandler extends CI_Controller
 			$response['method'] = "Insert";
 		}
 
-		// Initialize Cart Model For Registered Users
-		if ($this->registered) {
-			/**
-			 * Check if any item exist in the Cart Table in DB Update Count or Add new Data otherwise. 
-			 */
-
-			//  if (null !== $old_cart) {
-			// 	$response = $this->CartModel->update_count(['id' => $old_cart['id']]);
-			// } else {
-			// 	$response = $this->CartModel->add($data);
-			// }
-
-			/** 
-			 * Set Flashdata to display Success Message 
-			 */
-		}
-
 		$this->session->set_flashdata(['cart_success' => true]);
 		$this->session->set_flashdata(['cart_product_id' => $id]);
 
@@ -169,7 +175,7 @@ class CartHandler extends CI_Controller
 		$response = null;
 
 		// Clean AJAX Data
-		$stream_clean = $this->security->xss_clean($this->input->raw_input_stream);
+		$stream_clean = xss_clean($this->input->raw_input_stream);
 		$request = json_decode($stream_clean);
 		$id = $request->id;
 
@@ -177,9 +183,8 @@ class CartHandler extends CI_Controller
 			->set_status_header($this->statusCode)
 			->set_content_type('application/json', 'utf-8')
 			->set_output(json_encode($response));
-
-		// $this->load->view('welcome_message');
 	}
+
 	public function edit()
 	{
 		$this->load->view('welcome_message');
@@ -187,6 +192,34 @@ class CartHandler extends CI_Controller
 
 	public function process()
 	{
-		$this->load->view('welcome_message');
+		// Clean AJAX Data
+		$stream_clean = xss_clean($this->input->raw_input_stream);
+		$request = json_decode($stream_clean);
+		$id = $request->id;
+
+		$this->data =  array(
+			'product_id' => $id,
+		);
+
+		// Get Existing Cart Model Instance
+		$old_cart = $this->CartModel->get_where($this->data, false);
+
+		if ($this->session->has_userdata('user')) {
+			/**
+			 * Check if any item exist in the Cart Table in DB Update Count or Add new Data otherwise. 
+			 */
+
+			 if (null !== $old_cart) {
+				$response = $this->CartModel->update_count(['id' => $old_cart['id']]);
+			} else {
+				$response = $this->CartModel->add($this->data);
+			}
+
+			/** 
+			 * Set Flashdata to display Success Message 
+			 */
+		} else {
+			redirect(base_url('login'));
+		}
 	}
 }

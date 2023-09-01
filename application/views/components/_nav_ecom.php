@@ -24,30 +24,37 @@
                 <!-- <li class="nav-item">
                     <a class="nav-link" href="#"></a>
                 </li> -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        EN
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
+                <li class="nav-item" id="google_translate_element">
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Accounts
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <?php if ($this->session->has_userdata('user')) : ?>
+                            <li><a class="dropdown-item" href="<?= xss_clean(base_url($this->session->userdata('user')['username'] . "/account")) ?>"><?= xss_clean($this->session->userdata('user')['username']) ?></a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">My Profile</a></li>
+                            <li><a class="dropdown-item" href="#">Messages</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li>
+                                <a class="dropdown-item text-danger d-flex justify-content-between" href="<?= base_url('logout')?>">
+                                    Logout
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out">
+                                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                        <polyline points="16 17 21 12 16 7"></polyline>
+                                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                                    </svg>
+                                </a>
+                            </li>
+                        <?php else : ?>
+                            <li><a class="dropdown-item" href="<?= xss_clean(base_url('login')) ?>">Login</a></li>
+                        <?php endif ?>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -103,7 +110,7 @@
 
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
     <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Hello,&nbsp;<a href="<?= ($this->session->has_userdata('username')) ? base_url('account/' . $this->session->username) : base_url('login') ?>"><?= ($this->session->has_userdata('username')) ? $this->session->username : "Sign In" ?></a></h5>
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Hello,&nbsp;<a href="<?= ($this->session->has_userdata('user')) ? base_url($user['username'] . "/account") : base_url('login') ?>"><?= ($this->session->has_userdata('user')) ? $user['username'] : "Sign In" ?></a></h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
@@ -140,3 +147,13 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
+    }
+</script>

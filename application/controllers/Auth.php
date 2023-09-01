@@ -22,25 +22,43 @@ class Auth extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model("User");
+		$this->load->model("user/UserModel", 'User');
 	}
 
 	public function login()
 	{
 		$form_data = $this->input->post();
 		$user = $this->User->authorize($form_data);
-		if (count($user)== 0) {
+		// print_r($form_data);
+		// echo count($user);
+		if (count($user) == 0) {
+			redirect(base_url('login'));
 		} else {
 			$_SESSION['user'] = $user;
 			switch ($user['role']) {
 				case 'admin':
 					# code...
-					redirect("/ecm-admin");
+					redirect(base_url("ecm-admin"));
 					break;
-				
+				case 'manufacturer':
+					# code...
+					break;
+
+				case 'vendor':
+					# code...
+					break;
+
 				default:
 					# code...
-					redirect("/");
+					switch ($user['type']) {
+						case 'business':
+							redirect(base_url($user['username'] . "/account"));
+							break;
+
+						default:
+							redirect(base_url($user['username'] . "/account"));
+							break;
+					}
 					break;
 			}
 		}
@@ -59,6 +77,6 @@ class Auth extends CI_Controller
 	public function logout()
 	{
 		$this->session->sess_destroy();
-		redirect('/login');
+		redirect(base_url('login'));
 	}
 }

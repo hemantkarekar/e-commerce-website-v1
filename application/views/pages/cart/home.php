@@ -29,7 +29,7 @@
                                     </div>
                                     <div class="col-xl-9 col-lg-8 col-md-6 col-12">
                                         <h2>Your Cart is Empty</h2>
-                                        <p>There are thousands of products waiting for you. <br> Don't keep them waiting much longer. <a href="">Shop Now</a></p>
+                                        <p>There are thousands of products waiting for you. <br> Don't keep them waiting much longer. <a href="<?= xss_clean(base_url('products')) ?>">Shop Now</a></p>
                                     </div>
                                 </div>
                             <?php else : ?>
@@ -117,6 +117,12 @@
                             </div>
                         <?php endif ?>
                     </div>
+                    <div class="disclaimer">
+                        <small>
+                            The price and availability of items at <a href="<?= xss_clean(base_url()) ?>"><?= APP_NAME ?></a> are subject to change. The shopping cart is a temporary place to store a list of your items and reflects each item's most recent price.
+                            <br>Do you have a promotional code? We'll ask you to enter your claim code when it's time to pay.
+                        </small>
+                    </div>
                 </div>
                 <div class="col-xl-3 col-lg-4 col-12">
                     <?php if (count($cart_contents) != 0) : ?>
@@ -134,27 +140,6 @@
         </div>
     </main>
     <footer>
-        <div class="container mb-3">
-            <!-- If User is not Signed In -->
-            <div class="sign-in">
-                <div class="row g-0 justify-content-center">
-                    <div class="col-xl-6 col-md-8 col-10">
-                        <div class="text-center">
-                            <p>See Personalised Recommendations</p>
-                            <a class="btn btn-sm btn-primary mb-2">Sign&nbsp;In</a>
-                            <p><small>New Customer?&nbsp;<a href="">Start Here</a></small></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- END -->
-            <div class="disclaimer">
-                <small>
-                    The price and availability of items at Amazon.in are subject to change. The shopping cart is a temporary place to store a list of your items and reflects each item's most recent price.
-                    <br>Do you have a promotional code? We'll ask you to enter your claim code when it's time to pay.
-                </small>
-            </div>
-        </div>
         <?php $this->load->view('components/_common_footer') ?>
     </footer>
     <?php $this->load->view('components/_common_js') ?>

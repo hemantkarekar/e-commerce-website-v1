@@ -7,29 +7,36 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse w-100 justify-content-between" id="navbarNav">
-            <ul class="navbar-nav">
+        <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link <?= (base_url("") == current_url()) ? "active" : "" ?>" <?= (base_url("") == current_url()) ? 'aria-current="page"' : "" ?> href="<?= base_url("") ?>">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?= (base_url("products") == current_url()) ? "active" : "" ?>" <?= (base_url("products") == current_url()) ? 'aria-current="page"' : "" ?> href="<?= base_url("products") ?>">Products</a>
                 </li>
-                <!-- 
                 <li class="nav-item">
-                    <a class="nav-link <?= (base_url("pricing") == current_url()) ? "active" : "" ?>" <?= (base_url("pricing") == current_url()) ? 'aria-current="page"' : "" ?> href="<?= base_url("pricing") ?>">Pricing</a>
+                    <a class="nav-link <?= (base_url("about-us") == current_url()) ? "active" : "" ?>" <?= (base_url("about-us") == current_url()) ? 'aria-current="page"' : "" ?> href="<?= base_url("about-us") ?>">About&nbsp;Us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?= (base_url("other") == current_url()) ? "active" : "" ?>" <?= (base_url("other") == current_url()) ? 'aria-current="page"' : "" ?> href="<?= base_url("other") ?>">Other</a>
-                </li> 
-                -->
+                    <a class="nav-link <?= (base_url("services") == current_url()) ? "active" : "" ?>" <?= (base_url("services") == current_url()) ? 'aria-current="page"' : "" ?> href="<?= base_url("services") ?>">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <?= (base_url("contact-us") == current_url()) ? "active" : "" ?>" <?= (base_url("contact-us") == current_url()) ? 'aria-current="page"' : "" ?> href="<?= base_url("contact-us") ?>">Contact&nbsp;Us</a>
+                </li>
             </ul>
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link <?= (base_url("login") == current_url()) ? "active" : "" ?>" <?= (base_url("login") == current_url()) ? 'aria-current="page"' : "" ?> href="<?= base_url("login") ?>">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link <?= (base_url("register") == current_url()) ? "active" : "" ?>" <?= (base_url("register") == current_url()) ? 'aria-current="page"' : "" ?> href="<?= base_url("register") ?>">Register</a>
-                </li>
+                <?php if ($this->session->has_userdata('user')) : ?>
+                    <li class="nav-item">
+                        <a class="nav-link <?= (base_url( $this->session->userdata('user')['username'] .  "/account") == current_url()) ? "active" : "" ?>" <?= (base_url( $this->session->userdata('user')['username'] .  "/account") == current_url()) ? 'aria-current="page"' : "" ?> href="<?= base_url( $this->session->userdata('user')['username'] .  "/account") ?>"><?= $this->session->userdata('user')['username']?></a>
+                    </li>
+                    <?php else : ?>
+                        <li class="nav-item">
+                            <a class="nav-link <?= (base_url("login") == current_url()) ? "active" : "" ?>" <?= (base_url("login") == current_url()) ? 'aria-current="page"' : "" ?> href="<?= base_url("login") ?>">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?= (base_url("register") == current_url()) ? "active" : "" ?>" <?= (base_url("register") == current_url()) ? 'aria-current="page"' : "" ?> href="<?= base_url("register") ?>">Register</a>
+                        </li>
+                <?php endif ?>
             </ul>
         </div>
     </div>
