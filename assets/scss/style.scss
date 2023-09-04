@@ -1,7 +1,6 @@
 $color-brand: #349852;
 
-
-a{
+a {
 	text-decoration: none;
 	color: $color-brand;
 }
@@ -16,6 +15,16 @@ nav.navbar {
 		}
 	}
 	.nav-search {
+		width: 100%;
+	}
+}
+
+.modal {
+	.modal-bottom {
+		position: fixed;
+		bottom: 0;
+		margin: 0;
+		max-width: 100vw;
 		width: 100%;
 	}
 }
@@ -40,7 +49,7 @@ nav.navbar {
 .delivery_options {
 	background: url("../sprites/delivery_options.png") no-repeat;
 	background-size: cover;
-	&.free_delivery_sprite_icon{
+	&.free_delivery_sprite_icon {
 		background-position: 0 0;
 	}
 }
@@ -98,7 +107,7 @@ main#productDetails {
 		}
 	}
 }
-main{
+main {
 	a {
 		color: initial;
 	}

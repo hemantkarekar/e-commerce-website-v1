@@ -54,6 +54,7 @@
  * NOTE: If you change these, also change the error_reporting() code below
  */
 	define('ENVIRONMENT', 'development');
+	date_default_timezone_set("Asia/Kolkata");
 
 /*
  *---------------------------------------------------------------

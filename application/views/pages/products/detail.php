@@ -5,6 +5,8 @@
     <?php $this->load->view('components/_head') ?>
     <?php $this->load->view('components/_common_css') ?>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
     <title><?= $page['title'] . " • " . APP_NAME ?></title>
 </head>
 
@@ -25,16 +27,13 @@
                                             <i class="fa-solid fa-share"></i>
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="mailto:?body=I want to recommend this product at Amazon%0A%0AXiaomi Redmi 10 Power (Power Black%2C 8GB RAM%2C 128GB Storage)%0Aby Darshita Etel%0ALearn more<?= current_url() ?>/ref=direct_share_mail&subject=Check this out at Amazon"><i class="fa-regular fa-envelope"></i></a></li>
-                                            <li><a class="dropdown-item" target="_blank" href="https://www.pinterest.com/pin/create/button/?url=<?= current_url() ?>/ref=direct_share_pinterest&description=<?= $product['name'] ?>&media=<?= base_url('uploads/products/' . $product['image']) ?>&method=button"><i class="fa-brands fa-pinterest"></i></a></li>
-                                            <li><a class="dropdown-item" target="_blank" href="https://www.facebook.com/sharer.php?u=<?= current_url() ?>&redirect_uri=<?= current_url() ?>/ref=direct_share_facebook"><i class="fa-brands fa-facebook-f"></i></a></li>
-                                            <script>
-                                                function copyText() {
-                                                    navigator.clipboard.writeText("<?= current_url() ?>");
-                                                    alert("Text Copied to Clipboard");
-                                                }
-                                            </script>
-                                            <li><a class="dropdown-item" href="" onclick="copyText()"><i class="fa-solid fa-link"></i></a></li>
+                                            <li><a class="dropdown-item" href="mailto:?body=I want to recommend this product at Amazon%0A%0AXiaomi Redmi 10 Power (Power Black%2C 8GB RAM%2C 128GB Storage)%0Aby Darshita Etel%0ALearn more<?= current_url() ?>/?ref=direct_share_mail&subject=Check this out at Amazon"><i class="fa-regular fa-envelope"></i></a></li>
+                                            <li><a class="dropdown-item" target="_blank" href="https://www.pinterest.com/pin/create/button/?url=<?= current_url() ?>/?ref=direct_share_pinterest&description=<?= $product['name'] ?>&media=<?= base_url('uploads/products/' . $product['image']) ?>&method=button"><i class="fa-brands fa-pinterest"></i></a></li>
+                                            <li><a class="dropdown-item" target="_blank" href="https://www.facebook.com/sharer.php?u=<?= current_url() ?>&redirect_uri=<?= current_url() ?>/?ref=direct_share_facebook"><i class="fa-brands fa-facebook-f"></i></a></li>
+                                            <li>
+                                                <a href="javascript:void(0)" class="dropdown-item" id="clipText" data-clipboard-text="<?= current_url() ?>?ref=direct_share_clipboard"><i class="fa-solid fa-link"></i></a>
+                                            </li>
+                                            <script>var clipboard = new ClipboardJS('#clipText');</script>
                                         </ul>
                                     </div>
                                     <div class="row m-0">
@@ -160,6 +159,7 @@
             </pre>
         </div>
     </main>
+    <?= $this->session->product_history ?>
     <footer>
         <?php $this->load->view('components/_common_footer') ?>
     </footer>
@@ -227,6 +227,15 @@
             },
         });
     </script>
+
+
+    <!-- <script>
+        function copyText() {
+            navigator.clipboard.writeText("<?= current_url() ?>");
+            alert("Text Copied to Clipboard");
+        }
+    </script> -->
+
 </body>
 
 </html>

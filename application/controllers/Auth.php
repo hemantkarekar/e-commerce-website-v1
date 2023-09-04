@@ -22,13 +22,13 @@ class Auth extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model("user/UserModel", 'User');
+		$this->load->model("authentication/LoginModel", 'Login');
 	}
 
 	public function login()
 	{
 		$form_data = $this->input->post();
-		$user = $this->User->authorize($form_data);
+		$user = $this->Login->authorize($form_data);
 		// print_r($form_data);
 		// echo count($user);
 		if (count($user) == 0) {

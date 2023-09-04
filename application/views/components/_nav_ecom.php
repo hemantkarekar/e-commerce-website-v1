@@ -10,11 +10,11 @@
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropAddress">Deliver&nbsp;to&nbsp;India</button>
                 </li>
                 <li class="nav-item w-100">
-                    <form class="input-group nav-search" role="search">
-                        <select class="input-group-text" name="" id="">
-                            <option value="">All</option>
+                    <form class="input-group nav-search" role="search" action="<?= base_url("search") ?>" method="get">
+                        <select class="input-group-text" name="cat" id="">
+                            <option value="all">All</option>
                         </select>
-                        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                        <input class="form-control" name="sk" type="search" placeholder="Search" aria-label="Search">
                         <button class="input-group-text" type="submit">S</button>
 
                     </form>
