@@ -78,6 +78,6 @@ class SearchHandler extends CI_Controller
         $this->data['products']['data'] = $products_results;
         $this->data['products']['pagination'] = $this->pagination->create_links();
 
-        $this->load->view('pages/products/home', $this->data);
+        $this->load->view('pages/products/search', $this->data);
     }
 }
