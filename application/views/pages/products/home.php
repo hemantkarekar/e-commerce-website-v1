@@ -33,7 +33,7 @@
                         </div>
                     </div>
                 <?php endfor ?>
-                <div class="col-12">
+                <div class="col-md-6 col-12">
                     <div class="card mb-3">
                         <div class="card-header">
                             <h4>Best Selling Products</h4>
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12">
+                <div class="col-md-6 col-12">
                         <div class="card mb-3">
                             <div class="card-header">
                                 <h4>New Arrivals</h4>
@@ -54,7 +54,7 @@
                         </div>
                     </div>
                 <?php for ($i = 1; $i < 5; $i++) : ?>
-                    <div class="col-12">
+                    <div class="col-lg-3 col-md-6 col-12">
                         <div class="card mb-3">
                             <div class="card-header">
                                 <h4>{category <?= $i ?>}</h4>
@@ -66,7 +66,7 @@
                     </div>
                 <?php endfor ?>
                 <?php for ($i = 1; $i < 5; $i++) : ?>
-                    <div class="col-12">
+                    <div class="col-lg-3 col-md-6 col-12">
                         <div class="card mb-3">
                             <div class="card-header">
                                 <h4>{brand <?= $i ?>}</h4>

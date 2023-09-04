@@ -14,7 +14,7 @@
                         <select class="input-group-text" name="cat" id="">
                             <option value="all">All</option>
                         </select>
-                        <input class="form-control" name="sk" type="search" placeholder="Search" aria-label="Search">
+                        <input class="form-control" name="sk" value="<?= ($this->input->get("sk")!= null)? $this->input->get("sk"): ""  ?>" type="search" placeholder="Search" aria-label="Search">
                         <button class="input-group-text" type="submit">S</button>
 
                     </form>
