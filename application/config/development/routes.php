@@ -74,7 +74,7 @@ $route['(:any)/account'] = 'UserDashboard/index';
 
 $route['logout'] = 'auth/logout';
 
-$route['search/(:num)'] = 'SearchHandler/index/$1';
+// $route['search/(:num)'] = 'SearchHandler/index/$1';
 $route['search'] = 'SearchHandler/results';
 
 $route['products/(:num)'] = 'Products/index/$1';

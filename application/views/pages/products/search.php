@@ -213,7 +213,7 @@
                 <div class="col-lg-9 col-12">
                     <div class="row m-0 py-3">
                         <div class="col-12">
-                            <h5>Total <?= count($products['data']) ?> Results</h5>
+                            <h5>Total <?= $products['results']['count'] ?> Results</h5>
                         </div>
                         <div class="pagination">
                             <?= $products['pagination'] ?>
