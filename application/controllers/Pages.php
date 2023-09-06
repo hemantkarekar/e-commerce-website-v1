@@ -26,6 +26,7 @@ class Pages extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		$this->load->model("ProductModel");
 		if ($this->session->has_userdata('user')) {
 			$this->user = $this->session->userdata('user');
 			$this->data['user'] = $this->user;
@@ -33,6 +34,21 @@ class Pages extends CI_Controller
 	}
 	public function index()
 	{
+		$results = $this->ProductModel->get_random(['offset'=> 0, 'count' => 8]);
+		$this->data['products']['featured'] = json_decode($results, true, 4);
+
+		$results = $this->ProductModel->get_random(['offset'=> 0, 'count' => 8]);
+		$this->data['products']['arrivals'] = json_decode($results, true, 4);
+		
+		$results = $this->ProductModel->get_random(['offset'=> 0, 'count' => 1]);
+		$this->data['products']['offer_01'] = json_decode($results, true, 4);
+		
+		$results = $this->ProductModel->get_random(['offset'=> 0, 'count' => 1]);
+		$this->data['products']['offer_02'] = json_decode($results, true, 4);
+		
+		$results = $this->ProductModel->get_random(['offset'=> 0, 'count' => 1]);
+		$this->data['products']['offer_03'] = json_decode($results, true, 4);
+
 		$this->data['page'] = [
 			"title" => "Home"
 		];

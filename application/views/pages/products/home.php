@@ -14,67 +14,28 @@
     <main id="productList">
         <div class="container-fluid">
             <div class="row m-0">
-                <div class="col-12">
-                    <div class="mb-3">
-                        <div class="card">
-                            <div class="card-body"></div>
-                        </div>
-                    </div>
-                </div>
-                <?php for ($i = 1; $i < 4; $i++) : ?>
-                    <div class="col-lg-4 col-md-6 col-12">
-                        <div class="card mb-3">
-                            <div class="card-header">
-                                <h4>Offer Sale 0<?= $i ?></h4>
-                            </div>
-                            <div class="card-body">
-
-                            </div>
-                        </div>
-                    </div>
-                <?php endfor ?>
-                <div class="col-md-6 col-12">
-                    <div class="card mb-3">
-                        <div class="card-header">
-                            <h4>Best Selling Products</h4>
-                        </div>
-                        <div class="card-body">
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-12">
-                        <div class="card mb-3">
-                            <div class="card-header">
-                                <h4>New Arrivals</h4>
-                            </div>
-                            <div class="card-body">
-
-                            </div>
-                        </div>
-                    </div>
                 <?php for ($i = 1; $i < 5; $i++) : ?>
                     <div class="col-lg-3 col-md-6 col-12">
-                        <div class="card mb-3">
+                        <a class="card mb-3" href="">
                             <div class="card-header">
-                                <h4>{category <?= $i ?>}</h4>
+                                <strong>{category <?= $i ?>}</strong>
                             </div>
                             <div class="card-body">
 
                             </div>
-                        </div>
+                        </a>
                     </div>
                 <?php endfor ?>
                 <?php for ($i = 1; $i < 5; $i++) : ?>
                     <div class="col-lg-3 col-md-6 col-12">
-                        <div class="card mb-3">
+                        <a class="card mb-3" href="">
                             <div class="card-header">
-                                <h4>{brand <?= $i ?>}</h4>
+                                <strong>{brand <?= $i ?>}</strong>
                             </div>
                             <div class="card-body">
 
                             </div>
-                        </div>
+                        </a>
                     </div>
                 <?php endfor ?>
             </div>

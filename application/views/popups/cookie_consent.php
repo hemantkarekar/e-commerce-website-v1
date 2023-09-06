@@ -15,9 +15,7 @@
 <?php if (get_cookie("site_cookie_id", true) == null) : ?>
     <script>
         $(document).ready(() => {
-            setTimeout(function() {
-                $('#cookieConsentModal').modal("show");
-            }, 5000);
+            $('#cookieConsentModal').modal("show");
 
             var targetUrl = "<?php echo base_url(); ?>CookieHandler/add";
             const consentData = JSON.stringify({
@@ -44,11 +42,9 @@
         });
     </script>
 <?php else:  ?>
-    <?= get_cookie("site_cookie_id", true) ?>
+    <script>
+        $(document).ready(() => {
+            console.log("<?= get_cookie("site_cookie_id", true) ?>");
+        })
+    </script>
 <?php endif ?>
-
-<script>
-    $(document).ready(() => {
-
-    })
-</script>

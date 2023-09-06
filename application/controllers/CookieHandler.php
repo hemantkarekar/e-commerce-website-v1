@@ -29,7 +29,7 @@ class CookieHandler extends CI_Controller
                 $cookie= array(
                     'name'   => "site_cookie_id",
                     'value'  => random_string(),
-                    'expire' => '60',
+                    'expire' => '86400',
                 );
                 $this->input->set_cookie($cookie);
                 $response['success'] = true;
