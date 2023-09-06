@@ -72,7 +72,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-md col-12 mb-3">
-                                                            <button type="button" class="btn btn-sm btn-danger">
+                                                            <button type="button" class="btn btn-sm btn-danger deleteItem" onclick="removeFromCart('<?= $value['cart']['rowid'] ?>')">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash">
                                                                     <polyline points="3 6 5 6 21 6"></polyline>
                                                                     <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -131,7 +131,7 @@
                                 <div class="mb-3">
                                     <h5>Subtotal (<?= $quantity ?> Items) <strong><?= number_to_currency($subtotal, 'INR', 2) ?></strong></h5>
                                 </div>
-                                <button type="submit" class="btn btn-primary d-block w-100">Proceed to Buy</button>
+                                <a href="<?= base_url("cart/checkout") ?>" class="btn btn-primary d-block w-100">Proceed to Buy</a>
                             </div>
                         </div>
                     <?php endif ?>
@@ -143,6 +143,38 @@
         <?php $this->load->view('components/_common_footer') ?>
     </footer>
     <?php $this->load->view('components/_common_js') ?>
+    <script>
+        function removeFromCart(rowid) {
+            $(document).ready(function() {
+                // BUY NOW
+                var targetUrl = "<?php echo base_url(); ?>CartHandler/remove";
+                const formData = JSON.stringify({
+                    'rowid': rowid,
+                });
+
+                $(".deleteItem").on('click', (event) => {
+                    $.ajax({
+                        type: "POST",
+                        url: targetUrl,
+                        data: formData,
+                        dataType: 'json',
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function() {
+                            console.log("Product Removed");
+                            location.reload();
+                        },
+                        error: function(data) {
+                            console.log("Product Delete Failed", data);
+                        }
+                    });
+                    event.preventDefault();
+                    /* Go to Checkout URL*/
+                });
+            });
+        }
+    </script>
 </body>
 
 </html>

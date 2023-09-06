@@ -83,7 +83,7 @@ $route['product/(:any)/dp/(:any)'] = 'Products/details/$1/$2';
 
 $route['cart'] = 'CartHandler/index';
 $route['cart/empty'] = 'CartHandler/empty';
-$route['cart/checkout'] = 'CartHandler/checkout';
+$route['cart/checkout'] = 'CartHandler/confirm';
 
 $route['ecm-admin/payment/(:any)'] = 'Payment/status/$1';
 

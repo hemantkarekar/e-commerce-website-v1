@@ -110,6 +110,11 @@ nav.navbar {
 	.bdg-coupon {
 	}
 }
+@each $class, $color in $colors{
+	.bg-#{$class}{
+		background-color: $color !important;
+	}
+}
 
 .btn{
 	border-radius: 0.1rem;

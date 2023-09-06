@@ -33,7 +33,9 @@
                                             <li>
                                                 <a href="javascript:void(0)" class="dropdown-item" id="clipText" data-clipboard-text="<?= current_url() ?>?ref=direct_share_clipboard"><i class="fa-solid fa-link"></i></a>
                                             </li>
-                                            <script>var clipboard = new ClipboardJS('#clipText');</script>
+                                            <script>
+                                                var clipboard = new ClipboardJS('#clipText');
+                                            </script>
                                         </ul>
                                     </div>
                                     <div class="row m-0">
@@ -141,6 +143,14 @@
                     <div class="price_offers__wrapper card">
                         <div class="card-body">
                             <form id="checkoutForm" action="" method="post">
+                                <div class="mb-3 d-flex gap-2 align-items-center">
+                                    <label for="">Quantity</label>
+                                    <select name="quantity" id="qty" class="form-control w-auto">
+                                        <?php for ($i = 1; $i < 10; $i++) : ?>
+                                            <option value="<?= $i ?>"><?= $i ?></option>
+                                        <?php endfor ?>
+                                    </select>
+                                </div>
                                 <div class="mb-3">
                                     <button type="button" class="btn btn-block btn-secondary" id="addToCart">Add to Cart</button>
                                 </div>
@@ -169,11 +179,12 @@
         $(document).ready(function() {
             // BUY NOW
             var targetUrl = "<?php echo base_url(); ?>CartHandler/add";
-            const formData = JSON.stringify({
-                'id': "<?= $product['id'] ?>"
-            });
-
+            
             $("#checkoutForm").submit((event) => {
+                const formData = JSON.stringify({
+                    'id': "<?= $product['id'] ?>",
+                    'qty': $("#qty").val()
+                });
                 /* Add to Cart First */
                 $.ajax({
                     type: "POST",
@@ -199,6 +210,10 @@
 
             // ADD TO CART
             $('#addToCart').click(() => {
+                const formData = JSON.stringify({
+                    'id': "<?= $product['id'] ?>",
+                    'qty': $("#qty").val()
+                });
                 console.log(formData);
                 addToCart(targetUrl, formData)
                 event.preventDefault();

@@ -15,7 +15,7 @@
                             <option value="all">All</option>
                         </select>
                         <input class="form-control" name="sk" value="<?= ($this->input->get("sk")!= null)? $this->input->get("sk"): ""  ?>" type="search" placeholder="Search" aria-label="Search">
-                        <button class="input-group-text" type="submit">S</button>
+                        <button class="input-group-text bg-primary" type="submit">S</button>
 
                     </form>
                 </li>

@@ -72,7 +72,33 @@ class CartHandler extends CI_Controller
 	*/
 	public function confirm()
 	{
-		$this->load->view('welcome_message');
+		$dc = [];
+		$count = [];
+		$cart = [];
+
+		$cart_content = $this->cart->contents();
+		for ($i = 0; $i < count($cart_content); $i++) {
+			array_push($count, $i);
+		}
+		
+		$dc = array_combine($count, $cart_content);
+		foreach ($dc as $key => $value) {
+			
+			$product = $this->ProductModel->get_where(['id' => $value['id']]);
+
+			$cart = array_merge($cart, [
+				$key => [
+
+					'cart' => $value,
+					'product' => json_decode($product, true, 4)
+				]
+			]);
+		}
+		$this->data['cart_contents'] = $cart;
+		$this->data['page'] = [
+			"title" => "Cart Page"
+		];
+		$this->load->view('pages/cart/checkout', $this->data);
 	}
 
 	/* POST Requests */
@@ -129,7 +155,7 @@ class CartHandler extends CI_Controller
 		// Initialize the Cart Array for the 'cart' Library
 		$cart_data = [
 			'id' => $id,
-			'qty' => 1,
+			'qty' => $request->qty,
 			'price' => $product_details['discount_price'],
 			'name'   => str_split($product_details['name'], 15)[0],
 		];
@@ -177,7 +203,23 @@ class CartHandler extends CI_Controller
 		// Clean AJAX Data
 		$stream_clean = xss_clean($this->input->raw_input_stream);
 		$request = json_decode($stream_clean);
-		$id = $request->id;
+		$id = $request->rowid;
+
+		// Get Existing Cart Library Session Instance
+		$old_cart_lib = $this->cart->contents();
+
+		if (count($old_cart_lib) > 0) {
+			foreach ($old_cart_lib as $item) {
+				if ($item['rowid'] == $id) {
+					$this->cart->remove($item['rowid']);
+					$response['success'] = true;
+					$response['method'] = "Delete";
+				} else {
+					$response['success'] = false;
+				}
+				# code...
+			}
+		}
 
 		return $this->output
 			->set_status_header($this->statusCode)
