@@ -54,13 +54,9 @@ $route['default_controller'] = 'Pages';
 // POST Routes
 $route['api-auth-register'] = 'Auth/register';
 $route['api-auth-login'] = 'Auth/login';
-$route['api-cart-empty'] = 'Cart/empty';
-$route['api-cart-add'] = 'Cart/add';
-$route['api-cart-remove'] = 'Cart/remove';
-$route['api-cart-edit'] = 'Cart/edit';
-$route['api-cart-process'] = 'Cart/process';
 
-$route['api/payment'] = 'Payment/index';
+$route['ajx/product/create'] = 'Product/ajx_new';
+$route['ajx/product/edit'] = 'Product/ajx_edit';
 
 // GET Routes
 $route['about-us'] = 'Pages/about';

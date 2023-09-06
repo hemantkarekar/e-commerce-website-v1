@@ -1,4 +1,15 @@
 <?php
+
+/**
+ * ### Pre-requisites:
+ * 
+ * Libraries:
+ * captcha
+ * 
+ * Helpers:
+ * file
+ * string
+ */
 class CaptchaLibrary
 {
     public function create()
