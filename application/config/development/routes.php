@@ -71,6 +71,7 @@ $route['register'] = 'Pages/register';
 
 
 $route['(:any)/account'] = 'UserDashboard/index';
+$route['(:any)/order-history'] = 'UserDashboard/orders';
 
 $route['logout'] = 'auth/logout';
 
@@ -83,9 +84,8 @@ $route['product/(:any)/dp/(:any)'] = 'Products/details/$1/$2';
 
 $route['cart'] = 'CartHandler/index';
 $route['cart/empty'] = 'CartHandler/empty';
-$route['cart/checkout'] = 'CartHandler/confirm';
 
-$route['ecm-admin/payment/(:any)'] = 'Payment/status/$1';
+$route['cart/checkout'] = 'CheckoutHandler/index';
 
-$route['404_override'] = '';
+$route['404_override'] = 'ErrorHandler/error_404';
 $route['translate_uri_dashes'] = FALSE;

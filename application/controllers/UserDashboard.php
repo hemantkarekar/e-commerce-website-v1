@@ -25,42 +25,49 @@ defined('BASEPATH') or exit('No direct script access allowed');
  */
 class UserDashboard extends CI_Controller
 {
+	public $userData = [];
+	public $menu = [];
+	public $data = [];
 
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->model("user/UserModel", 'User');
 		$this->load->model("panel/DashboardControl", 'DashboardControl');
+
+		if ($this->session->has_userdata('user')) {
+			$this->userData = (array)$this->User->get($id);
+		} else {
+			redirect('/login');
+		}
 	}
 
 	public function index()
 	{
-		$this->load->helper('dashboard_menu');
-		$menu = [];
-		$menu = json_decode($this->DashboardControl->menu_options(), 3);
-		$data = [
+		$this->data = [
 			'page' => [
 				'title' => "Dashboard"
 			],
-			'menu' => $menu
 		];
-		if ($this->session->has_userdata('user')) {
-			$id = $_SESSION['user']['id'];
-			$user = (array)$this->User->get($id);
-			$data['user'] = $user;
+		$id = $_SESSION['user']['id'];
+		$this->data['user'] = $this->userData;
+		switch ($this->userData['type']) {
+			case 'business':
+				# code...
+				$this->load->helper('dashboard_menu');
 
-			switch ($user['type']) {
-				case 'business':
-					# code...
-					$this->load->view('pages/panel/business/home', $data);
-					break;
+				$this->menu = json_decode($this->DashboardControl->menu_options(), 3);
+				$this->data['menu'] =  $this->menu;
+				$this->load->view('pages/panel/business/home', $this->data);
+				break;
 
-				default:
-					$this->load->view('pages/panel/default/home', $data);
-					break;
-			}
-		} else {
-			redirect('/login');
+			default:
+				$this->load->view('pages/panel/default/home', $this->data);
+				break;
 		}
+	}
+
+	public function orders_history()
+	{
 	}
 }

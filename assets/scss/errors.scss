@@ -1,0 +1,28 @@
+@import "_colors.scss";
+
+
+a{
+    text-decoration: none;
+    color: $color-brand !important;
+}
+section{
+    &.content{
+        min-height: 90vh;
+    }
+}
+
+.title{
+    h2{
+        font-weight: 800;
+    }
+    p{
+        font-size: 2rem;
+        font-weight: 300;
+    }
+}
+.desc{
+    p{
+        font-size: 1.2rem;
+        font-weight: 400;
+    }
+}

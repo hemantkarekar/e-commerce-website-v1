@@ -1,33 +1,40 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 ?>
 
-<div style="border:1px solid #990000;padding-left:20px;margin:0 0 10px 0;">
+<div class="container mt-3">
+	<div class="card">
+		<div class="card-body">
+			<h4 class="text-danger">A PHP Error was encountered</h4>
 
-<h4>A PHP Error was encountered</h4>
-
-<p>Severity: <?php echo $severity; ?></p>
-<p>Message:  <?php echo $message; ?></p>
-<p>Filename: <?php echo $filepath; ?></p>
-<p>Line Number: <?php echo $line; ?></p>
-
-<?php if (defined('SHOW_DEBUG_BACKTRACE') && SHOW_DEBUG_BACKTRACE === TRUE): ?>
-
-	<p>Backtrace:</p>
-	<?php foreach (debug_backtrace() as $error): ?>
-
-		<?php if (isset($error['file']) && strpos($error['file'], realpath(BASEPATH)) !== 0): ?>
-
-			<p style="margin-left:10px">
-			File: <?php echo $error['file'] ?><br />
-			Line: <?php echo $error['line'] ?><br />
-			Function: <?php echo $error['function'] ?>
+			<p>
+				<strong>Severity:</strong> <?php echo $severity; ?><br>
+				<strong>Message:</strong> <?php echo $message; ?><br>
+				<strong>Filename:</strong> <?php echo $filepath; ?><br>
+				<strong>Line Number:</strong> <?php echo $line; ?>
 			</p>
 
-		<?php endif ?>
+			<hr>
 
-	<?php endforeach ?>
+			<?php if (defined('SHOW_DEBUG_BACKTRACE') && SHOW_DEBUG_BACKTRACE === TRUE) : ?>
 
-<?php endif ?>
+				<h5 class="mb-3">Backtrace:</h5>
+				<?php foreach (debug_backtrace() as $error) : ?>
 
+					<?php if (isset($error['file']) && strpos($error['file'], realpath(BASEPATH)) !== 0) : ?>
+
+						<p class="px-3">
+							<strong>File:</strong> <?php echo $error['file'] ?><br />
+							<strong>Line:</strong> <?php echo $error['line'] ?><br />
+							<strong>Function:</strong> <?php echo $error['function'] ?>
+						</p>
+
+					<?php endif ?>
+
+				<?php endforeach ?>
+
+			<?php endif ?>
+
+		</div>
+	</div>
 </div>

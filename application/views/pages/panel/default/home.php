@@ -23,7 +23,7 @@
                     <!-- Your Orders -->
                     <div class="col-lg-4 col-md-6 col-12 mb-3">
                         <div class="card h-100">
-                            <a href="<?= xss_clean(base_url("contact-us?ref=acpg_opt_tile")) ?>" class="card-body">
+                            <a href="<?= xss_clean(base_url($this->session->user['username'] . "/order-history?ref=acpg_opt_tile")) ?>" class="card-body">
                                 <div class="row m-0 align-items-center">
                                     <div class="col-md-auto col-12">
                                         <img src="" alt="" style="width: 50px; aspect-ratio:1;">
