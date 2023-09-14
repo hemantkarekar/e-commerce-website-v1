@@ -12,6 +12,11 @@ class Products extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('ProductModel');
+		$this->load->library('cart');
+
+		$this->data['cart'] = [
+			"count" => $this->cart->total_items(),
+		];
 
 
 		if ($this->session->has_userdata('user')) {
@@ -43,7 +48,6 @@ class Products extends CI_Controller
 		// echo $page . "to"  . $page + $per_page;
 
 		// echo count($products_all);
-
 
 		$this->data['page'] = [
 			"title" => "Products",

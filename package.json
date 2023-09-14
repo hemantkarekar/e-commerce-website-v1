@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@kanety/jquery-simple-tree": "^0.4.0"
+  }
+}

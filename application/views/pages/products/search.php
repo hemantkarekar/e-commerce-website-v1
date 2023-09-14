@@ -25,20 +25,38 @@
                             <li><a href="">Animal</a></li>
                             <li><a href="">Ceiling</a></li>
                         </ul>
-                        <ul class="list-unstyled">
-                            <li><strong>Category</strong></li>
-                            <li>
-                                <ul class="list-unstyled">
-                                    <li>Smartphones & Basic Mobiles</li>
-                                    <li>
-                                        <ul class="list-unstyled">
-                                            <li>Smartphones</li>
-                                            <li>Basic Mobiles</li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
+
+                        <fieldset class="fltr_group">
+                            <legend><strong>Category</strong></legend>
+                            <ul id="tree1">
+                                <li data-node-id="1">
+                                    <span class=""><a href="">Electronics</a></span>
+                                    <ul>
+                                        <li data-node-id="1.1">
+                                            <span class=""><a href="" class="">Mobiles & Accessories</a></span>
+                                            <ul>
+                                                <li data-node-id="1.1.1">
+                                                    <span class=""><a href="" class="">Smartphones & Basic Mobiles</a></span>
+                                                    <ul>
+                                                        <li data-node-id="1.1.1.1">
+                                                            <span class="active">Smartphones</span>
+                                                        </li>
+                                                        <li data-node-id="1.1.1.2">
+                                                            <span class="">Basic Mobiles</span>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <script>
+                                $(document).ready(() => {
+                                    $('#tree1').simpleTree();
+                                });
+                            </script>
+                        </fieldset>
                         <form action="" method="get">
                             <div class="filter_apply_btn py-3">
                                 <button type="submit" class="btn btn-primary">Apply Filters</button>
@@ -225,11 +243,11 @@
                                         <div class="row m-0">
                                             <div class="col-md-auto col-12">
                                                 <div class="prdct_image">
-                                                    <img src="<?= xss_clean($product['image']) ?>" alt="<?= xss_clean($product['name'])?>" loading="lazy">
+                                                    <img src="<?= xss_clean($product['image']) ?>" alt="<?= xss_clean($product['name']) ?>" loading="lazy">
                                                 </div>
                                             </div>
                                             <div class="col-md col-12">
-                                                <h4 class="prdct_name"><a href="<?=  xss_clean(base_url("product/") . random_string() . "/dp/" .$product['product_id']) ?>?ref=product_list" target="_blank"><?= xss_clean($product['name'] )?></a></h4>
+                                                <h4 class="prdct_name"><a href="<?= xss_clean(base_url("product/") . random_string() . "/dp/" . $product['product_id']) ?>?ref=product_list" target="_blank"><?= xss_clean($product['name']) ?></a></h4>
                                                 <div class="prdct_ratings">
                                                     <?= $product['ratings'] ?><i class="fa-solid fa-star mx-2"></i>
                                                     <a href=""><?= $product['ratings_count'] ?></a>
@@ -245,12 +263,15 @@
                                                     </div>
                                                     <div class="prdct_shipping">
                                                         <small class="text-muted">
-                                                            FREE delivery <strong>Sat, 26 Aug</strong> <br>
-                                                            Or fastest delivery <strong>Tomorrow, 25 Aug</strong>
+                                                            <?php
+                                                            $date=date_create("today");
+                                                            date_modify($date,"+5 days");
+                                                            ?>
+                                                            FREE delivery <strong><?= date_format($date,"D j F") ?></strong> <br>
+                                                            Or fastest delivery <strong>Tomorrow, <?= date("j F") ?></strong>
                                                         </small>
                                                     </div>
                                                 </div>
-                                                <!-- <a href="sdfsdf">Shop Now</a> -->
                                             </div>
                                         </div>
                                     </div>
@@ -269,6 +290,7 @@
         <?php $this->load->view('components/_common_footer') ?>
     </footer>
     <?php $this->load->view('components/_common_js') ?>
+    <script src="<?= base_url() ?>assets/js/@kanety/jquery-simple-tree/dist/jquery-simple-tree.js"></script>
 </body>
 
 </html>

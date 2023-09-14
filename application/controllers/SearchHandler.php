@@ -10,6 +10,10 @@ class SearchHandler extends CI_Controller
     {
         parent::__construct();
         $this->load->model('ProductModel');
+        $this->load->library('cart');
+        $this->data['cart'] = [
+			"count" => $this->cart->total_items(),
+		];
 
 
         if ($this->session->has_userdata('user')) {

@@ -1,0 +1,29 @@
+$NAMESPACE: simple-tree;
+
+.#{$NAMESPACE} {
+  padding: 0;
+  margin: 0;
+
+  li {
+    list-style-type: none;
+  }
+  &-icon {
+    display: inline-block;
+    width: 1.5em;
+    line-height: 1.5em;
+    margin: .1em;
+    background-color: #eee;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  &-opened > &-icon:before {
+    content: '-';
+  }
+  &-closed > &-icon:before {
+    content: '+';
+  }
+  &-empty > &-icon {
+    visibility: hidden;
+  }
+}

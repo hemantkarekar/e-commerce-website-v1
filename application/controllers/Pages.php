@@ -27,26 +27,30 @@ class Pages extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model("ProductModel");
+		$this->load->library("cart");
 		if ($this->session->has_userdata('user')) {
 			$this->user = $this->session->userdata('user');
 			$this->data['user'] = $this->user;
 		}
+		$this->data['cart'] = [
+			"count" => $this->cart->total_items(),
+		];
 	}
 	public function index()
 	{
-		$results = $this->ProductModel->get_random(['offset'=> 0, 'count' => 8]);
+		$results = $this->ProductModel->get_random(['offset' => 0, 'count' => 8]);
 		$this->data['products']['featured'] = json_decode($results, true, 4);
 
-		$results = $this->ProductModel->get_random(['offset'=> 0, 'count' => 8]);
+		$results = $this->ProductModel->get_random(['offset' => 0, 'count' => 8]);
 		$this->data['products']['arrivals'] = json_decode($results, true, 4);
-		
-		$results = $this->ProductModel->get_random(['offset'=> 0, 'count' => 1]);
+
+		$results = $this->ProductModel->get_random(['offset' => 0, 'count' => 1]);
 		$this->data['products']['offer_01'] = json_decode($results, true, 4);
-		
-		$results = $this->ProductModel->get_random(['offset'=> 0, 'count' => 1]);
+
+		$results = $this->ProductModel->get_random(['offset' => 0, 'count' => 1]);
 		$this->data['products']['offer_02'] = json_decode($results, true, 4);
-		
-		$results = $this->ProductModel->get_random(['offset'=> 0, 'count' => 1]);
+
+		$results = $this->ProductModel->get_random(['offset' => 0, 'count' => 1]);
 		$this->data['products']['offer_03'] = json_decode($results, true, 4);
 
 		$this->data['page'] = [

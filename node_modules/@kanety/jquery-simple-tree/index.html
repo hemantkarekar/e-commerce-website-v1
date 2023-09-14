@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="dist/jquery-simple-tree.js"></script>
+</head>
+<body>
+  <h1>Basic tree</h1>
+  <button type="button" id="expander">expand</button>
+  <button type="button" id="collapser">collapse</button>
+  <button type="button" id="open1">open 1</button>
+  <button type="button" id="close1">close 1</button>
+  <ul id="basic">
+    <li data-node-id="1">
+      <span>1</span>
+      <ul>
+        <li data-node-id="1.1">
+          <span>1.1</span>
+          <ul>
+            <li data-node-id="1.1.1">
+              <span>1.1.1</span>
+              <ul>
+                <li data-node-id="1.1.1.1">
+                  <span>1.1.1.1</span>
+                </li>
+              </ul>
+            </li>
+            <li data-node-id="1.1.2">
+              <span>1.1.2</span>
+            </li>
+          </ul>
+        </li>
+        <li data-node-id="1.2">
+          <span>1.2</span>
+          <ul>
+            <li data-node-id="1.2.1">
+              <span>1.2.1</span>
+            </li>
+            <li data-node-id="1.2.2">
+              <span>1.2.2</span>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li data-node-id="2">
+      <span>2</span>
+      <ul>
+        <li data-node-id="2.1">
+          <span>2.1</span>
+        </li>
+        <li data-node-id="2.2">
+          <span>2.2</span>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <script>
+  $('#basic').simpleTree({
+    expander: '#expander',
+    collapser: '#collapser',
+    store: 'session',
+    storeKey: 'basic'
+  });
+  $('#open1').on('click', function() {
+    $('#basic').data('simple-tree').openByID("1");
+  });
+  $('#close1').on('click', function() {
+    $('#basic').data('simple-tree').closeByID("1");
+  });
+  </script>
+
+  <h1>Specify opened nodes</h1>
+  <ul id="opened">
+    <li data-node-id="1">
+      <span>1</span>
+      <ul>
+        <li data-node-id="1.1">
+          <span>1.1</span>
+          <ul>
+            <li data-node-id="1.1.1">
+              <span>1.1.1</span>
+            </li>
+          </ul>
+        </li>
+        <li data-node-id="1.2">
+          <span>1.2</span>
+          <ul>
+            <li data-node-id="1.2.1">
+              <span>1.2.1</span>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <script>
+   $('#opened').simpleTree({
+     opened: [1, 1.1]
+   });
+  </script>
+
+  <h1>Callback</h1>
+  <ul id="callback">
+    <li data-node-id="1">
+      <span>1</span>
+      <ul>
+        <li data-node-id="1.1">
+          <span>1.1</span>
+          <ul>
+            <li data-node-id="1.1.1" data-node-lazy="true">
+              <span>1.1.1</span>
+            </li>
+            <li data-node-id="1.1.2" data-node-lazy="true">
+              <span>1.1.2</span>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <p id="message"> </p>
+  <script>
+   $('#callback').simpleTree({
+   }).on('node:open', function(e, $node) {
+     var nodeID = $node.data('node-id');
+     $('#message').append("opened " + nodeID + " ");
+     if ($node.data('node-lazy')) {
+       $node.data('node-lazy', false);
+       var newID = nodeID + '.1';
+       var loaded = '<ul><li data-node-id="' + newID + '" data-node-lazy="true"><span>' + newID + '</span></li></ul>';
+       $node.append(loaded);
+       $('#callback').data('simple-tree').build();
+     }
+   }).on('node:close', function(e, $node) {
+     var nodeID = $node.data('node-id');
+     $('#message').append("closed " + nodeID + " ");
+   });
+  </script>
+</body>
+</html>

@@ -61,7 +61,7 @@
                     <a class="nav-link" href="#">Return&nbsp;&&nbsp;Orders</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url("cart") ?>">Cart</a>
+                    <a class="nav-link" href="<?= base_url("cart") ?>">Cart <?= $cart["count"] ?></a>
                 </li>
             </ul>
         </div>

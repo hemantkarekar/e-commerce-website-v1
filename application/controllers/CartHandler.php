@@ -24,6 +24,10 @@ class CartHandler extends CI_Controller
 			$this->user = $this->session->userdata('user');
 			$this->data['user'] = $this->user;
 		}
+
+		$this->data['cart'] = [
+			"count" => $this->cart->total_items(),
+		];
 	}
 
 	public function index()
@@ -168,7 +172,7 @@ class CartHandler extends CI_Controller
 				if ($item['id'] == $id) {
 					$cart_data = [
 						'rowid' => $item['rowid'],
-						'qty' => $item['qty'] + 1,
+						'qty' => $item['qty'] + $request->qty,
 					];
 					$this->cart->update($cart_data);
 					$response['success'] = true;
