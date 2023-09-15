@@ -6,9 +6,11 @@ class UserModel extends CI_Model
         parent::__construct();
     }
 
-    public function get($id)
+    public function get($array)
     {
-        $this->db->where(['id' => $id]);
+        foreach ($array as $key => $value) {
+            $this->db->where([$key => $value]);
+        }
         $result = $this->db->get('ecm_users')->row();
         return $result;
     }

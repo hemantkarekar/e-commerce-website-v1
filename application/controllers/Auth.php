@@ -52,11 +52,15 @@ class Auth extends CI_Controller
 					# code...
 					switch ($user['type']) {
 						case 'business':
-							redirect(base_url($user['username'] . "/account"));
+							// redirect(base_url($user['username'] . "/account"));
 							break;
 
 						default:
-							redirect(base_url($user['username'] . "/account"));
+							if(isset($_SERVER["HTTP_REFERER"])){
+								redirect($_SERVER["HTTP_REFERER"]);
+							} else{
+								redirect(base_url($user['username'] . "/account"));
+							}
 							break;
 					}
 					break;

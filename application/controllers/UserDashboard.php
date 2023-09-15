@@ -34,9 +34,11 @@ class UserDashboard extends CI_Controller
 		parent::__construct();
 		$this->load->model("user/UserModel", 'User');
 		$this->load->model("panel/DashboardControl", 'DashboardControl');
+		$this->load->library('cart');
 
 		if ($this->session->has_userdata('user')) {
-			$this->userData = (array)$this->User->get($id);
+			$id = $_SESSION['user']['id'];
+			$this->userData = (array)$this->User->get(['id' => $id]);
 		} else {
 			redirect('/login');
 		}
@@ -51,20 +53,33 @@ class UserDashboard extends CI_Controller
 		];
 		$id = $_SESSION['user']['id'];
 		$this->data['user'] = $this->userData;
-		switch ($this->userData['type']) {
-			case 'business':
-				# code...
-				$this->load->helper('dashboard_menu');
-
-				$this->menu = json_decode($this->DashboardControl->menu_options(), 3);
-				$this->data['menu'] =  $this->menu;
-				$this->load->view('pages/panel/business/home', $this->data);
+		switch ($this->userData['role']) {
+			case 'admin':
+				redirect(base_url('ecm-admin'));
 				break;
-
-			default:
-				$this->load->view('pages/panel/default/home', $this->data);
+				
+				default:
+				$this->data['cart'] = [
+					"count" => $this->cart->total_items(),
+				];
+				switch ($this->userData['type']) {
+					case 'business':
+						# code...
+						$this->load->helper('dashboard_menu');
+		
+						$this->menu = json_decode($this->DashboardControl->menu_options(), 3);
+						$this->data['menu'] =  $this->menu;
+						$this->load->view('pages/panel/business/home', $this->data);
+						break;
+						
+						default:
+						$this->load->view('pages/panel/default/home', $this->data);
+						break;
+				}
+				# code...
 				break;
 		}
+		
 	}
 
 	public function orders_history()

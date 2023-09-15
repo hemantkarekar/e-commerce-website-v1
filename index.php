@@ -55,6 +55,7 @@
  */
 	define('ENVIRONMENT', 'development');
 	date_default_timezone_set("Asia/Kolkata");
+	require_once "vendor/autoload.php";
 
 /*
  *---------------------------------------------------------------

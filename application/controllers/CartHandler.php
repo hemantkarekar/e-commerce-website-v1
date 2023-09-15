@@ -76,27 +76,8 @@ class CartHandler extends CI_Controller
 	*/
 	public function confirm()
 	{
-		$dc = [];
-		$count = [];
-		$cart = [];
-
-		$cart_content = $this->cart->contents();
-		for ($i = 0; $i < count($cart_content); $i++) {
-			array_push($count, $i);
-		}
-		
-		$dc = array_combine($count, $cart_content);
-		foreach ($dc as $key => $value) {
-			
-			$product = $this->ProductModel->get_where(['id' => $value['id']]);
-
-			$cart = array_merge($cart, [
-				$key => [
-
-					'cart' => $value,
-					'product' => json_decode($product, true, 4)
-				]
-			]);
+		if($this->cartModel->count_all()>0){
+			$cart = $this->cartModel->get_with_products();
 		}
 		$this->data['cart_contents'] = $cart;
 		$this->data['page'] = [

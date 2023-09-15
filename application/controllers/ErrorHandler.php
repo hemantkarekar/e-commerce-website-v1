@@ -24,6 +24,6 @@ class ErrorHandler extends CI_Controller
                 'featured' => json_decode($results, true, 4),
             ]
         ];
-        $this->load->view('errors/html/error_404', $this->data);
+        $this->load->view('errors/html/error_404_theme', $this->data);
     }
 }

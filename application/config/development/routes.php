@@ -86,6 +86,8 @@ $route['cart'] = 'CartHandler/index';
 $route['cart/empty'] = 'CartHandler/empty';
 
 $route['cart/checkout'] = 'CheckoutHandler/index';
+$route['payment/(:any)'] = "CheckoutHandler/payment_status/$1";
 
 $route['404_override'] = 'ErrorHandler/error_404';
+// $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

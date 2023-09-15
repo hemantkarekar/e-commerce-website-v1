@@ -5,29 +5,60 @@ class CartModel extends CI_Model
     public $result = [];
     public $registered = true;
 
+    public $cartObject = [];
+    public $user = [];
+
     public function __construct()
     {
         parent::__construct();
         $this->load->library('cart');
+        $this->user = $this->session->user;
     }
 
     public function add(array $products = null): bool
     {
         if (count($products) > 0 || $products != null) {
-
-            // if ($this->session->userdata('website_username')) {
-            //     $this->session->set_userdata();
-            // } else{
-            //     redirect('/login');
-            // }
-
-            if($this->registered){
-
-            }
             $this->db->insert('ecm_cart', $products);
-            // return true;
-        } 
+        }
         return json_encode($this->result);
+    }
+
+    public function dump(array $cart_session, $userid)
+    {
+        $data = [];
+        $id  = random_string('alnum', 32);
+        foreach ($cart_session as $cart) {
+            $arr = [
+                'user_id' => $userid,
+                'cart_id' => $id,
+                'product_id' => $cart['id'],
+                'quantity' => $cart['qty'],
+                'subtotal' => $cart['subtotal'],
+            ];
+            array_push($data, $arr);
+        }
+        foreach ($data as $entry) {
+            $this->db->insert('ecm_cart', $entry);
+        }
+        $this->cart->destroy();
+    }
+
+    public function get($userid){
+        $this->result = $this->get_where(['user_id' => $userid], true);
+        return json_encode($this->result);
+    }
+    
+    public function get_with_products()
+    {
+        $this->result = json_decode($this->get($this->user['id']), true, 4);
+
+        $this->cartObject['cart'] = $this->result;
+
+        for ($i = 0; $i < count($this->result); $i++) {
+            $this->cartObject['cart'][$i]['product_detail'] = json_decode($this->ProductModel->get_where(['id' => $this->cartObject['cart'][$i]['product_id']]), true, 5);
+        }
+        return $this->cartObject;
+        // return $cart;
     }
 
     public function get_where(array $condition, bool $bulk = true)
@@ -50,8 +81,15 @@ class CartModel extends CI_Model
         return $this->result;
     }
 
-    public function count_all() : int {
-        return count($this->cart->contents());
+    public function count_all(): int
+    {
+        if(isset($this->cart)){
+            $this->result = json_decode($this->get($this->user['id']), true, 4);
+            return count($this->cart->contents()) + count($this->result);
+        } else{
+            $this->result = json_decode($this->get($this->user['id']), true, 4);
+            return count($this->result);
+        }
     }
 
     public function update_count(array $condition)
