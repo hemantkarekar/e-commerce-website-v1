@@ -23,8 +23,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost:8080/e-commerce-website-v1/ecm-admin';
 $config['base_url'] = 'https://test.apogeedigitech.in/repositories/e-commerce-website-v1/ecm-admin/';
+$config['base_url'] = 'http://localhost:8080/e-commerce-website-v1/ecm-admin';
 
 /*
 |--------------------------------------------------------------------------
