@@ -11,7 +11,7 @@ class CheckoutHandler extends CI_Controller
 	public $user = [];
 	public $data = [];
 	public $order = [];
-	public $cart = [];
+	public $cartContent = [];
 
 	public function __construct()
 	{
@@ -32,7 +32,7 @@ class CheckoutHandler extends CI_Controller
 		} else {
 			redirect(base_url('login'));
 		}
-		$this->cart = $this->CartModel->get($this->user['id']);
+		$this->cartContent = $this->CartModel->get($this->user['id']);
 	}
 
 	public function index()
