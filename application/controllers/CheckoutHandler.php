@@ -11,6 +11,7 @@ class CheckoutHandler extends CI_Controller
 	public $user = [];
 	public $data = [];
 	public $order = [];
+	public $cart = [];
 
 	public function __construct()
 	{
@@ -27,11 +28,11 @@ class CheckoutHandler extends CI_Controller
 		if ($this->session->has_userdata('user')) {
 			$this->user = $this->session->userdata('user');
 			$this->data['user'] = $this->user;
-
 			$this->CartModel->dump($this->cart->contents(), $this->user['id']);
 		} else {
 			redirect(base_url('login'));
 		}
+		$this->cart = $this->CartModel->get($this->user['id']);
 	}
 
 	public function index()
@@ -50,6 +51,7 @@ class CheckoutHandler extends CI_Controller
 				$subtotal += $item['subtotal'];
 			}
 			$subtotal *= 100;
+			
 			/**
 			 * Create Order with product_conf_id
 			 * Possible Output:
@@ -107,32 +109,52 @@ class CheckoutHandler extends CI_Controller
 				echo "Confirmed";
 				print_r($this->input->get());
 				die;
-				// Create New Order
-				// --------------------------------------------
-				// $this->OrderModel->new([
-				// 	'rzp_order_id' => $this->order['id'],
-				// 	'rzp_payment_id' => $this->input->get('razorpay_payment_id'),
-				// 	'content' => json_decode($this->CartModel->get($this->user['id']), true, 4)
-				// ]);
-				// --------------------------------------------
-				// Returns OrderID
 
-				// Empty the Cart
-				// --------------------------------------------
-				//  $this->CartModel->reset($this->user['id'])
+				/**
+				 * Create New Order
+				 * --------------------------------------------
+				 * $this->OrderModel->new([
+				 * 		'rzp_order_id' => $this->order['id'],
+				 * 		'rzp_payment_id' => $this->input->get('razorpay_payment_id'),
+				 * 		'content' => json_decode($this->CartModel->get($this->user['id']), true, 4)
+				 * ]);
+				 * --------------------------------------------
+				 * Returns OrderID
+				 */
+
+				/**
+				 * Empty the Cart
+				 * --------------------------------------------
+				 * $this->CartModel->reset($this->user['id'])
+				 * 
+				 */ 
+				 
+				 /**
+				 * Return to order-history/order/$id page in User Account
+				 * --------------------------------------------
+				 * redirect(base_url($this->user['username']."/order-history/order/".$this->order['id']"));
+				 * 
+				 */ 
 				
-				// Return to the particular order page in User Account
-				// --------------------------------------------
-				// redirect(base_url($this->user['username']."/order-history/orders"));
 				break;
 
 			case 'failed':
 				# code...
-				echo "Failed";
+				/**
+				 * Return to cart
+				 * --------------------------------------------
+				 * redirect(base_url("cart");
+				 * 
+				 */ 
 				break;
 
 			default:
-				echo "Default";
+				/**
+				 * Return to cart
+				 * --------------------------------------------
+				 * redirect(base_url("cart");
+				 * 
+				 */ 
 				break;
 		}
 	}

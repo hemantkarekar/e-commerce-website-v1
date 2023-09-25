@@ -4,21 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Auth extends CI_Controller
 {
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see https://codeigniter.com/userguide3/general/urls.html
-	 */
+	public $user = [];
 	public function __construct()
 	{
 		parent::__construct();
@@ -56,9 +42,9 @@ class Auth extends CI_Controller
 							break;
 
 						default:
-							if(isset($_SERVER["HTTP_REFERER"])){
+							if (isset($_SERVER["HTTP_REFERER"])) {
 								redirect($_SERVER["HTTP_REFERER"]);
-							} else{
+							} else {
 								redirect(base_url($user['username'] . "/account"));
 							}
 							break;
@@ -80,6 +66,15 @@ class Auth extends CI_Controller
 
 	public function logout()
 	{
+		$this->load->library('cart');
+		if (count($this->cart->contents()) > 0) {
+			$this->CartModel->dump($this->cart->contents(), $this->user['id']);
+		}
+		
+		if (count($this->WishListModel->get($this->user['id'])) > 0) {
+			$this->WishListModel->dump($this->cart->contents(), $this->user['id']);
+		}
+
 		$this->session->sess_destroy();
 		redirect(base_url('login'));
 	}

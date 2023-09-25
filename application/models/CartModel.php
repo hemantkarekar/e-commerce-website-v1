@@ -37,8 +37,10 @@ class CartModel extends CI_Model
             ];
             array_push($data, $arr);
         }
-        foreach ($data as $entry) {
-            $this->db->insert('ecm_cart', $entry);
+        if(count($data)>0){
+            $this->db->insert_batch('ecm_cart', $data);
+        } else{
+            $this->db->insert('ecm_cart', $data);
         }
         $this->cart->destroy();
     }
